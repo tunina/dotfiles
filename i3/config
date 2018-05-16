@@ -1,1 +1,261 @@
+######################################################################################### 
+#   ___  ________          ________  ________  ________   ________ ___  ________        #	
+#  |\  \|\_____  \        |\   ____\|\   __  \|\   ___  \|\  _____\\  \|\   ____\       #	
+#  \ \  \|____|\ /_       \ \  \___|\ \  \|\  \ \  \\ \  \ \  \__/\ \  \ \  \___|       #	   
+#   \ \  \    \|\  \       \ \  \    \ \  \\\  \ \  \\ \  \ \   __\\ \  \ \  \  ___     #
+#    \ \  \  __\_\  \       \ \  \____\ \  \\\  \ \  \\ \  \ \  \_| \ \  \ \  \|\  \ 	#
+#     \ \__\|\_______\       \ \_______\ \_______\ \__\\ \__\ \__\   \ \__\ \_______\	#
+#      \|__|\|_______|        \|_______|\|_______|\|__| \|__|\|__|    \|__|\|_______|   #
+#											#
+#######################################################################################	#
+#
+#	Todo:
+#	* Border colors
+#	* Consistent theming
+#	* Consistent font
+#	* Incorporate stickies and apply to workflow
+#
+#########################################################################################	
+#
+#	Table of Contents:			
+#	[1][Basic Definitions]
+#	[2][External Scripts]
+#	[3][Colors]
+#	[4][General Bindings]
+#	[5][Workspaces]
+#	[6][Change Focus]
+#	[7][Multimedia Keys]
+#	[8][Resize Mode]	
+#	[9][Gaps Mode]
+#	[10][Screenshots With Scrot]
+#	[11][Lockscreen]
+#
+#########################################################################################	
+#
+#	Required Programs:
+#	gimp	
+#	scrot	
+#	feh		
+#	i3Lock				
+#	polybar			
+#	rxvt-unicode
+#	rofi			
+#
+#
+#########################################################################################
 
+
+#####[1][Basic Definitions]#####
+
+
+font pango:DejaVuSans Mono 8
+for_window [class="^.*"] border pixel 3 
+gaps inner 15
+gaps outer 15
+set $mod Mod4 
+set $term --no-startup-id urxvt
+
+
+#####[2][External Scripts]#####
+
+
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always feh --bg-scale /home/zero/Pictures/woah.png
+exec --no-startup-id compton 
+bindsym $mod+d exec "rofi -show-icons -modi combi -show combi -combi-modi run,drun"
+bindsym $mod+Tab exec rofi -show-icons -show window
+
+
+#####[3][Colors]#####	
+
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #4c7899 #285577 #ffffff #cb4b16   #cb4b16
+client.focused_inactive #333333 #5f676a #ffffff #268bd2   #268bd2 
+client.unfocused        #333333 #222222 #888888 #222222   #1c1c1c 
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+client.background       #ffffff
+
+	
+#####[4][General Bindings]#####
+
+
+bindsym $mod+Return exec $term 
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+q kill
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+h split h
+bindsym $mod+v split v
+
+#mode bindings
+bindsym $mod+r mode "resize"
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+#floating bindings
+floating_modifier $mod
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+#focusing bindings
+bindsym $mod+a focus parent
+bindsym $mod+u focus child
+
+
+
+######[5][Workspaces]######
+
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1		workspace $ws1
+bindsym $mod+2		workspace $ws2
+bindsym $mod+3		workspace $ws3
+bindsym $mod+4		workspace $ws4
+bindsym $mod+5		workspace $ws5
+bindsym $mod+6		workspace $ws6
+bindsym $mod+7		workspace $ws7
+bindsym $mod+8		workspace $ws8
+bindsym $mod+9		workspace $ws9
+bindsym $mod+0		workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1	move container to workspace $ws1
+bindsym $mod+Shift+2	move container to workspace $ws2
+bindsym $mod+Shift+3	move container to workspace $ws3
+bindsym $mod+Shift+4	move container to workspace $ws4
+bindsym $mod+Shift+5	move container to workspace $ws5
+bindsym $mod+Shift+6	move container to workspace $ws6
+bindsym $mod+Shift+7	move container to workspace $ws7
+bindsym $mod+Shift+8	move container to workspace $ws8
+bindsym $mod+Shift+9	move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+
+#####[6][Change Focus]#####
+
+
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+
+######[7][Multimedia Keys]#####	
+
+
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 1dB+ unmute
+bindsym XF86AudioLowerVolume exec amixer -q set Master 1dB- unmute
+bindsym XF86AudioMute exec amixer -q set Master toggle
+
+
+#####[8][Resize Mode]#####
+
+
+mode "resize" {
+	
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        #Arrow Keys 
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+
+#####[9][Gaps Mode]#####
+
+
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+
+#####[10][Screenshots]#####
+
+
+bindsym Print exec scrot -e 'mv $f /tmp/ && gimp /tmp/$f'
+
+
+######[11][Lockscreen]#####
+
+
+bindsym $mod+shift+x exec i3lock -c 000000
